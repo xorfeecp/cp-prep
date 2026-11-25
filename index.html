@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CP Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a patient coach for a beginner with one month left; short sentences, one idea at a time, always a working example.
+   IDEA: a training ladder: seven rungs from Start to Pro, each rung a set of lessons and problems you tick off.
+   PICTURE: the ladder on the home page, each rung filling with colour as lessons and problems are completed.
+   COLOUR and TYPE: cobalt strip and links, white pages, one colour per level (cool to warm as it gets harder); Space Grotesk headings, Inter text, JetBrains Mono code.
+   LAYOUT: top bar with sections, then one page at a time (home, roadmap, learn, lesson, practice, olympiad, mock, cheat sheet). */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0b0e1a);--ink:light-dark(#0d1226,#e8ecff);--mute:light-dark(#4a5578,#9aa6cc);
+--co:light-dark(#1240e0,#6f8dff);--zone:light-dark(#f1f4ff,#121831);--line:light-dark(#d5dcf3,#252e55);
+--card:light-dark(#ffffff,#10152b);--ok:light-dark(#127a3c,#4fd38a);--hot:light-dark(#d9480f,#ff8a4c);--code:#0b1020;
+--L0:#64748b;--L1:#0f9d58;--L2:#0d8bd9;--L3:#5b5bd6;--L4:#b146c2;--L5:#e0457b;--L6:#e8590c;--L7:#0e7490}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.62 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:'Space Grotesk',Inter,sans-serif;line-height:1.1;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(32px,5vw,50px)}h2{font-size:clamp(26px,3.2vw,36px)}h3{font-size:20px;margin-top:1.3em}
+p,li{max-width:72ch}a{color:var(--co)}
+code{font-family:'JetBrains Mono',monospace;font-size:.9em;background:var(--zone);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+header.top{background:#1240e0;color:#fff;position:sticky;top:0;z-index:10}
+.topin{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:8px max(4vw,12px);overflow-x:auto;white-space:nowrap}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#fff;text-decoration:none;margin-right:10px;flex:none}
+.topin a.nav{flex:none;color:#dbe3ff;text-decoration:none;padding:9px 11px;border-radius:8px;font-size:15px;font-weight:500}
+.topin a.nav.on,.topin a.nav:hover{background:#0e33b8;color:#fff}
+main{max-width:1180px;margin:0 auto;padding:clamp(20px,3.5vw,44px) max(4vw,14px) 60px}
+.lead{font-size:18px;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h3{margin-top:0}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;color:#fff}
+.chip.soft{background:var(--zone);color:var(--co)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button,select,input{font:inherit;font-size:16px}
+button,.btn{min-height:44px;padding:8px 16px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+button.pri,.btn.pri{background:var(--co);border-color:var(--co);color:#fff}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+select,input[type=search]{min-height:44px;padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok);vertical-align:middle}
+.ladder{display:flex;flex-direction:column-reverse;gap:8px;margin:18px 0}
+.rung{display:grid;grid-template-columns:150px 1fr 90px;gap:12px;align-items:center;text-decoration:none;color:var(--ink);padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+.rung:hover{border-color:var(--co)}
+.rung b{font-family:'Space Grotesk';font-size:17px}
+.bar{height:14px;background:var(--zone);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px;transition:width .4s}
+.rung small{color:var(--mute);text-align:right}
+.big{font-family:'Space Grotesk';font-size:clamp(30px,4vw,42px);font-weight:700;line-height:1}
+.stat{background:var(--zone);border-radius:12px;padding:14px 16px}.stat span{color:var(--mute);font-size:14px}
+table.t{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+table.t th,table.t td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t th{color:var(--mute);font-weight:600;font-size:14px}
+.scroll{overflow-x:auto}
+.codebox{position:relative;margin:12px 0;border-radius:10px;overflow:hidden;border:1px solid #1d2647}
+.codehead{display:flex;align-items:center;gap:6px;background:#141b36;padding:6px 8px;flex-wrap:wrap}
+.codehead span{color:#c8d2ff;font-size:13px;font-weight:600;margin-right:auto;padding-left:6px}
+.codehead button{min-height:32px;padding:3px 10px;font-size:13px;background:#1d2647;color:#dfe6ff;border-color:#33406e}
+.codehead button.on{background:#1240e0;border-color:#1240e0;color:#fff}
+pre{margin:0;background:var(--code);color:#dfe6ff;padding:14px 16px;overflow-x:auto;font:13.5px/1.55 'JetBrains Mono',monospace}
+pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}
+.k{color:#8fb4ff}.s{color:#9be59b}.c{color:#7d88ad;font-style:italic}.n{color:#ffb86b}
+.box{border-left:4px solid var(--co);background:var(--zone);padding:10px 16px;margin:14px 0}
+.box.warn{border-color:var(--hot)}
+.big{font-variant-numeric:tabular-nums}
+p.big{font-size:20px;font-family:'JetBrains Mono',monospace;font-weight:600;background:var(--zone);padding:10px 14px;border-radius:8px;display:inline-block}
+details{border-top:1px solid var(--line);padding:6px 0}
+summary{cursor:pointer;font-weight:600;min-height:36px;display:flex;align-items:center}
+.prob{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.prob.done{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+.ph{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;justify-content:space-between}
+.ph h3{margin:0;font-size:18px}
+.lesson-body{font-size:17px}
+.crumbs{font-size:14px;color:var(--mute);margin-bottom:10px}
+.daycard{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
+.daycard.done .dtitle{text-decoration:line-through;color:var(--mute)}
+.dtitle{font-weight:600}
+.pill{display:inline-block;margin:3px 4px 0 0;padding:2px 9px;border-radius:7px;font-size:13.5px;background:var(--zone);color:var(--ink);text-decoration:none;border:1px solid var(--line)}
+.pill.ok{border-color:var(--ok);color:var(--ok)}
+.timer{font-family:'JetBrains Mono';font-size:clamp(40px,8vw,72px);font-weight:600;line-height:1}
+.muted{color:var(--mute)}
+.lvl-title{display:flex;align-items:center;gap:10px;margin:26px 0 8px}
+.lvl-title h2{margin:0}
+.lcard{display:block;text-decoration:none;color:var(--ink)}
+.lcard.done{border-color:var(--ok)}
+.lcard small{color:var(--mute)}
+footer{max-width:1180px;margin:0 auto;padding:20px max(4vw,14px) 40px;color:var(--mute);font-size:14px}
+@media(max-width:600px){.rung{grid-template-columns:1fr 70px}.rung .bar{grid-column:1/-1;grid-row:2}table.t{font-size:14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <a class="brand" href="#home">CP Prep</a>
+  <a class="nav" href="#home" data-r="home">Home</a>
+  <a class="nav" href="#roadmap" data-r="roadmap">30-day roadmap</a>
+  <a class="nav" href="#learn" data-r="learn">Learn</a>
+  <a class="nav" href="#practice" data-r="practice">Practice</a>
+  <a class="nav" href="#olympiad" data-r="olympiad">Olympiad problems</a>
+  <a class="nav" href="#mock" data-r="mock">Mock contest</a>
+  <a class="nav" href="#cheat" data-r="cheat">Cheat sheet</a>
+</div></header>
+<main id="app" tabindex="-1"></main>
+<footer>CP Prep: a month-long plan from your first loop to ~2000-rated problems. Progress is saved in this browser.</footer>
+
+<script src="data/lessons1.js"></script>
+<script src="data/lessons2.js"></script>
+<script src="data/lessons3.js"></script>
+<script src="data/problems.js"></script>
+<script src="data/olympiad.js"></script>
+<script src="data/roadmap.js"></script>
+<script>
+{
+const LV = [
+ ['start','Start here','800','var(--L0)','How judges work, input/output, olympiad strategy'],
+ ['beginner','Beginner','800–1000','var(--L1)','Python, simulation, digits, strings, functions, complexity'],
+ ['intermediate','Intermediate','1000–1200','var(--L2)','Sorting, greedy, counting, prefix sums, difference arrays, number theory'],
+ ['medium','Medium','1200–1400','var(--L3)','Two pointers, binary search, binary search on the answer, patterns, parity'],
+ ['preadv','Pre-advanced','1400–1600','var(--L4)','Recursion, DP, graphs, stacks, heaps'],
+ ['advanced','Advanced','1600–1800','var(--L5)','DSU, bitmasks, modular math, sweep line, Fenwick, Dijkstra'],
+ ['pro','Pro','1800–2000','var(--L6)','Segment trees, game theory, speed'],
+ ['cpp','C++ track','switching','var(--L7)','From Python to C++ in 5 lessons']];
+const LVMAP = Object.fromEntries(LV.map(l => [l[0], l]));
+const L = window.LESSONS, LMAP = Object.fromEntries(L.map(l => [l.id, l]));
+const P = window.PROBLEMS.map(p => ({id:p[0],name:p[1],r:p[2],lvl:p[3],lesson:p[4],ask:p[5],h:[p[6],p[7]],idea:p[8],src:'cf'}));
+const O = window.OLY;
+O.forEach(o => P.push({id:o.id,name:o.title,r:o.rating,lvl:o.rating<=1000?'beginner':o.rating<=1200?'intermediate':o.rating<=1400?'medium':o.rating<=1600?'preadv':o.rating<=1800?'advanced':'pro',lesson:o.lessons[0],ask:o.story,src:'oly',grade:o.grade}));
+const PMAP = Object.fromEntries(P.map(p => [p.id, p]));
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MEM = {};   /* fallback when browser storage is unavailable: progress then lasts until the page is closed */
+const store = {get(k,d){try{const v=localStorage.getItem(k);if(v!==null)return JSON.parse(v)}catch(e){} return k in MEM ? MEM[k] : d},
+  set(k,v){MEM[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let doneL = new Set(store.get('cp_lessons', [])), doneP = new Set(store.get('cp_solved', [])), doneD = new Set(store.get('cp_days', []));
+const save = () => {store.set('cp_lessons',[...doneL]);store.set('cp_solved',[...doneP]);store.set('cp_days',[...doneD])};
+
+/* tiny syntax highlighter */
+const KW = {py:/\b(def|return|for|while|if|else|elif|in|import|from|and|or|not|True|False|None|lambda|break|continue|class|print|range|len|int|map|list|sorted|min|max|sum|set|dict|str)\b/,
+            cpp:/\b(int|long|double|char|bool|void|return|for|while|if|else|auto|const|using|namespace|typedef|vector|string|map|set|pair|tuple|deque|priority_queue|struct|true|false|break|continue|cin|cout|sort|include)\b/};
+function hl(code, lang){
+  const re = lang==='cpp' ? /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*')|([A-Za-z_]\w*)|(\b\d+\b)/g
+                          : /(#[^\n]*)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*')|([A-Za-z_]\w*)|(\b\d+\b)/g;
+  let out='', last=0, m;
+  while((m = re.exec(code))){
+    out += esc(code.slice(last, m.index));
+    if(m[1]) out += '<span class="c">'+esc(m[1])+'</span>';
+    else if(m[2]) out += '<span class="s">'+esc(m[2])+'</span>';
+    else if(m[3]) out += KW[lang].test(m[3]) && m[3].match(KW[lang])[0]===m[3] ? '<span class="k">'+esc(m[3])+'</span>' : esc(m[3]);
+    else out += '<span class="n">'+esc(m[4])+'</span>';
+    last = re.lastIndex;
+  }
+  return out + esc(code.slice(last));
+}
+let CODES = [];
+function codeBox(title, py, cpp){
+  const id = CODES.length; CODES.push({py, cpp});
+  const first = py ? 'py' : 'cpp';
+  const tabs = (py && cpp) ? `<button type="button" class="on" data-tab="py" data-c="${id}">Python</button><button type="button" data-tab="cpp" data-c="${id}">C++</button>` : `<button type="button" class="on" disabled>${py?'Python':'C++'}</button>`;
+  return `<div class="codebox"><div class="codehead"><span>${esc(title||'')}</span>${tabs}<button type="button" data-copy="${id}">Copy</button></div><pre><code id="code${id}" data-lang="${first}">${hl(first==='py'?py:cpp, first)}</code></pre></div>`;
+}
+app.addEventListener('click', e => {
+  const t = e.target.closest('button'); if(!t) return;
+  if(t.dataset.tab){ const c = CODES[t.dataset.c]; const el = $('#code'+t.dataset.c);
+    el.dataset.lang = t.dataset.tab; el.innerHTML = hl(c[t.dataset.tab], t.dataset.tab);
+    t.parentElement.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('on', b===t)); }
+  if(t.dataset.copy){ const c = CODES[t.dataset.copy]; const lang = $('#code'+t.dataset.copy).dataset.lang;
+    navigator.clipboard.writeText(c[lang]).then(()=>{t.textContent='Copied';setTimeout(()=>t.textContent='Copy',1400)}).catch(()=>{t.textContent='Select the code to copy'}); }
+});
+
+const pct = (a,b) => b ? Math.round(a/b*100) : 0;
+function levelStats(lv){
+  const ls = L.filter(l => l.level===lv); const ps = P.filter(p => p.lvl===lv);
+  const d = ls.filter(l => doneL.has(l.id)).length + ps.filter(p => doneP.has(p.id)).length;
+  return {total: ls.length + ps.length, done: d, ls, ps};
+}
+function nextLesson(){ return L.find(l => !doneL.has(l.id) && l.level!=='cpp') || L.find(l => !doneL.has(l.id)); }
+function pLink(id){ const p = PMAP[id]; if(!p) return ''; const ok = doneP.has(id);
+  const href = p.src==='oly' ? '#o-'+id : '#p-'+id;
+  return `<a class="pill${ok?' ok':''}" href="${href}">${ok?'✓ ':''}${esc(id)} · ${esc(p.name)}${p.r?' · '+p.r:''}</a>`; }
+function lLink(id){ const l = LMAP[id]; if(!l) return ''; const ok = doneL.has(id);
+  return `<a class="pill${ok?' ok':''}" href="#l-${id}">${ok?'✓ ':''}${esc(l.title)}</a>`; }
+
+/* ── pages ── */
+function home(){
+  const nl = nextLesson();
+  const solved = doneP.size, totalP = P.length;
+  let rungs = LV.filter(l=>l[0]!=='cpp').map(l => { const s = levelStats(l[0]);
+    return `<a class="rung" href="#learn-${l[0]}"><b style="color:${l[3]}">${l[1]}</b><div class="bar" aria-label="${s.done} of ${s.total} done"><i style="width:${pct(s.done,s.total)}%;background:${l[3]}"></i></div><small>${l[2]}</small></a>`; }).join('');
+  return `<h1>From zero to ~2000, in one month</h1>
+  <p class="lead">Seven levels, ${L.length} lessons, ${totalP} problems with hints, and all 10 regional olympiad problems explained with tested Python and C++ code. Climb the ladder from the bottom.</p>
+  <div class="grid" style="margin:18px 0">
+    <div class="stat"><span>Lessons done</span><div class="big">${doneL.size}<span style="font-size:20px"> / ${L.length}</span></div></div>
+    <div class="stat"><span>Problems solved</span><div class="big">${solved}<span style="font-size:20px"> / ${totalP}</span></div></div>
+    <div class="stat"><span>Roadmap days done</span><div class="big">${doneD.size}<span style="font-size:20px"> / 30</span></div></div>
+  </div>
+  <div class="row">${nl?`<a class="btn pri" href="#l-${nl.id}">Continue: ${esc(nl.title)}</a>`:''}<a class="btn" href="#roadmap">Today's plan</a><a class="btn" href="#mock">Start a mock contest</a></div>
+  <h2 style="margin-top:34px">The ladder</h2>
+  <p class="muted">Each rung fills as you finish its lessons and solve its problems. The ratings are Codeforces difficulty.</p>
+  <div class="ladder">${rungs}</div>
+  <div class="grid">
+    <div class="card"><h3>How to use this site</h3><ol><li>Follow the <a href="#roadmap">30-day roadmap</a>: about 2–3 hours a day.</li><li>Read a lesson, type the code yourself, then solve its problems.</li><li>Use hints only after 15–20 minutes of trying.</li><li>Every week, do a <a href="#mock">mock contest</a> with the timer.</li></ol></div>
+    <div class="card"><h3>The one rule</h3><p>In a subtask olympiad, <b>a slow correct program earns points</b>. Always submit the brute force first, then improve. That alone would have turned your 100 into 200+.</p></div>
+    <div class="card"><h3>Switching to C++</h3><p>Python is enough for most subtasks. For N = 10⁶ or heavy loops you'll need C++. The <a href="#learn-cpp">C++ track</a> teaches you to translate your Python, and every olympiad solution here has both versions.</p></div>
+  </div>`;
+}
+function roadmap(){
+  let n = 0;
+  const weeks = window.ROADMAP.map(w => `<h2 style="margin-top:28px">${esc(w.w)}</h2>` + w.days.map(d => { n++; const id = 'd'+n; const ok = doneD.has(id);
+    return `<div class="daycard${ok?' done':''}"><input type="checkbox" data-day="${id}" ${ok?'checked':''} aria-label="Day ${n} done"><div><div class="dtitle">Day ${n} · ${esc(d[0])}</div>
+      <div>${d[1].map(lLink).join('')}</div><div>${d[2].map(pLink).join('')}</div>${d[3]?`<div class="muted" style="font-size:15px;margin-top:4px">${esc(d[3])}</div>`:''}</div></div>`; }).join('')).join('');
+  return `<h1>30-day roadmap</h1><p class="lead">About 2–3 hours a day. Tick a day when its lessons are read and its problems are tried. Don't worry if a problem stays unsolved: read its hints and move on.</p>
+  <div class="box">Extra, after the 30 days or if you're ahead: ${window.EXTRA.lessons.map(lLink).join('')} ${window.EXTRA.problems.map(pLink).join('')}</div>${weeks}`;
+}
+function learn(only){
+  const list = LV.filter(l => !only || l[0]===only);
+  return `<h1>${only?esc(LVMAP[only][1]):'Learn'}</h1><p class="lead">${only?esc(LVMAP[only][4]):'Every topic you need up to about rating 2000, in order. Each lesson: the idea, code you can copy, when to use it, common mistakes, and problems.'}</p>
+  ${only?'<p><a href="#learn">← All levels</a></p>':''}` + list.map(l => { const ls = L.filter(x => x.level===l[0]); const s = levelStats(l[0]);
+    return `<div class="lvl-title"><span class="chip" style="background:${l[3]}">${esc(l[2])}</span><h2>${esc(l[1])}</h2><span class="muted">${s.done}/${s.total} done</span></div>
+    <div class="grid">${ls.map(x => `<a class="card lcard${doneL.has(x.id)?' done':''}" href="#l-${x.id}"><small>${x.mins} min${doneL.has(x.id)?' · ✓ done':''}</small><h3 style="margin:.2em 0">${esc(x.title)}</h3><span class="muted" style="font-size:15px">${esc(x.goal)}</span></a>`).join('')}</div>`; }).join('');
+}
+function lesson(id){
+  const l = LMAP[id]; if(!l) return notFound();
+  const lv = LVMAP[l.level]; const i = L.indexOf(l); const prev = L[i-1], next = L[i+1];
+  const code = l.code.map(c => codeBox(c.t, c.py, c.cpp)).join('');
+  return `<div class="crumbs"><a href="#learn-${l.level}">${esc(lv[1])}</a> · ${l.mins} min</div>
+  <h1>${esc(l.title)}</h1><p class="lead">${esc(l.goal)}</p>
+  <div class="lesson-body">${l.body}</div>${code}
+  ${l.signals.length?`<div class="box"><b>When to use it:</b><ul>${l.signals.map(s=>`<li>${s}</li>`).join('')}</ul></div>`:''}
+  ${l.mistakes.length?`<div class="box warn"><b>Common mistakes:</b><ul>${l.mistakes.map(s=>`<li>${s}</li>`).join('')}</ul></div>`:''}
+  ${l.practice.length?`<h3>Practise this</h3><div>${l.practice.map(pLink).join('')}</div>`:''}
+  <div class="row" style="margin-top:26px"><button type="button" class="${doneL.has(id)?'':'pri'}" id="markL">${doneL.has(id)?'✓ Done (click to undo)':'Mark lesson as done'}</button>
+  ${prev?`<a class="btn" href="#l-${prev.id}">← ${esc(prev.title)}</a>`:''}${next?`<a class="btn" href="#l-${next.id}">${esc(next.title)} →</a>`:''}</div>`;
+}
+function probCard(p, open){
+  const ok = doneP.has(p.id);
+  const lvl = LVMAP[p.lvl];
+  const m = p.id.match(/^(\d+)([A-Z]\d?)$/);
+  const link = p.src==='cf' ? `<a href="https://codeforces.com/problemset/problem/${m[1]}/${m[2]}">Open on Codeforces</a>` : `<a href="#o-${p.id}">Full editorial, subtasks and code</a>`;
+  return `<article class="prob${ok?' done':''}" id="pc-${p.id}"><div class="ph"><h3>${esc(p.id)} · ${esc(p.name)}</h3>
+   <span class="row"><span class="chip" style="background:${lvl[3]}">${p.r}</span>${p.src==='oly'?`<span class="chip soft">${esc(p.grade)} olympiad</span>`:''}<label class="muted"><input type="checkbox" data-solve="${p.id}" ${ok?'checked':''}> Solved</label></span></div>
+   <p style="margin:8px 0">${p.ask}</p>
+   ${p.src==='cf'?`<details ${open?'open':''}><summary>Hint 1</summary><p>${p.h[0]}</p></details><details><summary>Hint 2</summary><p>${p.h[1]}</p></details><details><summary>Key idea</summary><p>${p.idea}</p></details>`:''}
+   <div class="row" style="margin-top:6px">${link}${LMAP[p.lesson]?`<span class="muted">Lesson: <a href="#l-${p.lesson}">${esc(LMAP[p.lesson].title)}</a></span>`:''}</div></article>`;
+}
+let PF = store.get('cp_pf', {lvl:'', topic:'', src:'', status:'', q:''});
+function practice(){
+  const lvOpts = LV.filter(l=>l[0]!=='cpp'&&l[0]!=='start').map(l=>`<option value="${l[0]}" ${PF.lvl===l[0]?'selected':''}>${l[1]} (${l[2]})</option>`).join('');
+  const tOpts = L.filter(l=>P.some(p=>p.lesson===l.id)).map(l=>`<option value="${l.id}" ${PF.topic===l.id?'selected':''}>${esc(l.title)}</option>`).join('');
+  return `<h1>Practice</h1><p class="lead">${P.length} problems: Codeforces classics plus the regional olympiad problems. Try each for 15–20 minutes before opening a hint.</p>
+  <div class="row" style="margin:14px 0">
+   <select id="fL" aria-label="Level"><option value="">All levels</option>${lvOpts}</select>
+   <select id="fT" aria-label="Topic"><option value="">All topics</option>${tOpts}</select>
+   <select id="fS" aria-label="Source"><option value="">All sources</option><option value="cf" ${PF.src==='cf'?'selected':''}>Codeforces</option><option value="oly" ${PF.src==='oly'?'selected':''}>Olympiad</option></select>
+   <select id="fD" aria-label="Status"><option value="">Solved and unsolved</option><option value="todo" ${PF.status==='todo'?'selected':''}>Unsolved only</option><option value="done" ${PF.status==='done'?'selected':''}>Solved only</option></select>
+   <input type="search" id="fQ" placeholder="Search name or ID" value="${esc(PF.q)}" aria-label="Search">
+  </div><p class="muted" id="pcount"></p><div id="plist" class="grid"></div><p class="muted" style="margin-top:18px">${esc(window.PROBLEM_NOTE)}</p>`;
+}
+function drawPractice(){
+  const q = PF.q.trim().toLowerCase();
+  const order = ['beginner','intermediate','medium','preadv','advanced','pro'];
+  const list = P.filter(p => (!PF.lvl||p.lvl===PF.lvl) && (!PF.topic||p.lesson===PF.topic) && (!PF.src||p.src===PF.src)
+     && (!PF.status || (PF.status==='done') === doneP.has(p.id)) && (!q || (p.id+' '+p.name).toLowerCase().includes(q)))
+     .sort((a,b) => a.r-b.r || order.indexOf(a.lvl)-order.indexOf(b.lvl));
+  $('#pcount').textContent = list.length ? `${list.length} problem${list.length>1?'s':''}` : 'No problems match these filters.';
+  $('#plist').innerHTML = list.map(p => probCard(p)).join('');
+}
+function probPage(id){ const p = PMAP[id]; if(!p) return notFound(); if(p.src==='oly') { location.hash = '#o-'+id; return ''; }
+  return `<p><a href="#practice">← Practice</a></p>${probCard(p, false)}`; }
+function olympiad(){
+  const g = gr => O.filter(o => o.grade===gr).map(o => `<a class="card lcard${doneP.has(o.id)?' done':''}" href="#o-${o.id}"><small>${esc(o.grade)} · ${esc(o.letter)} · ≈${o.rating}${doneP.has(o.id)?' · ✓ solved':''}</small><h3 style="margin:.2em 0">${esc(o.title)}</h3><span class="muted" style="font-size:15px">${esc(o.story.slice(0,120))}…</span></a>`).join('');
+  return `<h1>Olympiad problems</h1><p class="lead">All 10 problems from the regional round (10th grade, 25 Nov, and 11th grade, 24 Nov), plus the warm-up you were given. Each has the story in plain English, how to collect every subtask, the full idea, and tested Python and C++ code.</p>
+  <div class="box warn">Try each problem yourself first, at least for the subtasks. The editorials are for after you've tried.</div>
+  <h2>10th grade</h2><div class="grid">${g('10th')}</div><h2 style="margin-top:28px">11th grade</h2><div class="grid">${g('11th')}</div><h2 style="margin-top:28px">Warm-up</h2><div class="grid">${g('Practice')}</div>`;
+}
+function olyPage(id){
+  const o = O.find(x => x.id===id); if(!o) return notFound();
+  const ok = doneP.has(id);
+  return `<div class="crumbs"><a href="#olympiad">Olympiad problems</a> · ${esc(o.grade)} grade · Problem ${esc(o.letter)} · ≈${o.rating} rating</div>
+  <h1>${esc(o.title)}</h1><p class="lead">${esc(o.story)}</p>
+  <h3>Points without the full idea</h3><div class="scroll"><table class="t"><tr><th>Subtask</th><th>Points</th><th>How to get it</th></tr>${o.subtasks.map(s=>`<tr><td>${esc(s[0])}</td><td>${esc(s[1])}</td><td>${esc(s[2])}</td></tr>`).join('')}</table></div>
+  <details><summary>Show the full solution idea (try first!)</summary><ol>${o.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>
+  ${codeBox(o.id==='O11E'?'Python (subtasks 1–2) and C++ (100 points)':'Tested solution', o.py, o.cpp)}</details>
+  <h3>Lessons behind this problem</h3><div>${o.lessons.map(lLink).join('')}</div>
+  <div class="row" style="margin-top:22px"><label class="btn"><input type="checkbox" data-solve="${o.id}" ${ok?'checked':''}> I solved it myself</label><a class="btn" href="#olympiad">All olympiad problems</a></div>`;
+}
+let mockTimer = null;
+function mock(){
+  const st = store.get('cp_mock', null);
+  const sets = {'10':['O10A','O10B','O10C','O10D','O10E'],'11':['O11A','O11B','O11C','O11D','O11E']};
+  if(!st) return `<h1>Mock contest</h1><p class="lead">Practise the real thing: 5 problems, 4 hours, subtasks. The timer keeps running even if you close the page.</p>
+  <div class="grid"><div class="card"><h3>10th-grade set</h3><p>Raqamlar yig'indisi, Suv zaxirasi, Bir qatorda, Birin-ketin, APL.</p><button class="pri" data-mock="10">Start 4 hours</button></div>
+  <div class="card"><h3>11th-grade set</h3><p>Maktab turniri, Karvonsaroy, Rostgo'ylar, Tadqiqot bazalari, Jamoalar.</p><button class="pri" data-mock="11">Start 4 hours</button></div></div>
+  <div class="box">Rules for yourself: read all 5 first (15 min), collect easy subtasks everywhere, never stay stuck for more than 40 minutes, and test on the examples before submitting. Check your answers with the code on each problem page afterwards.</div>`;
+  const ids = sets[st.set];
+  return `<h1>Mock contest · ${st.set}th grade</h1><div class="timer" id="clock">--:--:--</div><p class="muted" id="clockMsg"></p>
+  <div class="grid" style="margin-top:16px">${ids.map(id => { const o = O.find(x=>x.id===id);
+    return `<div class="card"><small class="muted">Problem ${o.letter}</small><h3 style="margin:.2em 0">${esc(o.title)}</h3><p style="font-size:15px">${esc(o.story)}</p><p class="muted" style="font-size:14px">Subtask points: ${o.subtasks.map(s=>esc(s[1])).join(' / ')}</p><label class="muted"><input type="checkbox" data-solve="${o.id}" ${doneP.has(o.id)?'checked':''}> Solved</label></div>`; }).join('')}</div>
+  <div class="row" style="margin-top:18px"><button id="mockEnd">End contest</button></div>
+  <p class="muted">The statements are summarised here. Open your PDF for the full text and examples. After the contest, read each editorial on the Olympiad page.</p>`;
+}
+function tick(){
+  const st = store.get('cp_mock', null); const el = $('#clock'); if(!st || !el) { clearInterval(mockTimer); return; }
+  const left = Math.max(0, st.start + 4*3600*1000 - Date.now());
+  const h = Math.floor(left/3600000), m = Math.floor(left%3600000/60000), s = Math.floor(left%60000/1000);
+  el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const used = 4*3600*1000 - left;
+  $('#clockMsg').textContent = left===0 ? 'Time is up! Now read the editorials.' : used < 15*60000 ? 'First 15 minutes: read all problems and write their subtasks on paper.' : left < 20*60000 ? 'Last 20 minutes: no new ideas. Make sure your best versions are submitted.' : 'Collect subtasks. Stuck for 40 minutes? Switch problems.';
+}
+function cheat(){
+  const tpl = [
+   ['Fast input + main()',String.raw`import sys
+def main():
+    data = sys.stdin.buffer.read().split()
+    n = int(data[0]); a = list(map(int, data[1:1 + n]))
+    print(sum(a))
+main()`,String.raw`#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    int n; cin >> n;
+    vector<long long> a(n);
+    for (auto& x : a) cin >> x;
+    cout << accumulate(a.begin(), a.end(), 0LL) << "\n";
+}`],
+   ['Binary search: smallest x with check(x)',String.raw`lo, hi = LOW, HIGH
+while lo < hi:
+    mid = (lo + hi) // 2
+    if check(mid): hi = mid
+    else: lo = mid + 1`,String.raw`long long lo = LOW, hi = HIGH;
+while (lo < hi) {
+    long long mid = lo + (hi - lo) / 2;
+    if (check(mid)) hi = mid; else lo = mid + 1;
+}`],
+   ['Binary search: largest x with check(x)',String.raw`lo, hi = LOW, HIGH
+while lo < hi:
+    mid = (lo + hi + 1) // 2
+    if check(mid): lo = mid
+    else: hi = mid - 1`,String.raw`long long lo = LOW, hi = HIGH;
+while (lo < hi) {
+    long long mid = lo + (hi - lo + 1) / 2;
+    if (check(mid)) lo = mid; else hi = mid - 1;
+}`],
+   ['Prefix sums',String.raw`pre = [0] * (n + 1)
+for i in range(n): pre[i + 1] = pre[i] + a[i]
+# sum of a[l..r] (0-based) = pre[r + 1] - pre[l]`,String.raw`vector<long long> pre(n + 1, 0);
+for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + a[i];`],
+   ['BFS',String.raw`from collections import deque
+dist = [-1] * (n + 1); dist[s] = 0; q = deque([s])
+while q:
+    v = q.popleft()
+    for w in g[v]:
+        if dist[w] == -1:
+            dist[w] = dist[v] + 1; q.append(w)`,String.raw`vector<int> dist(n + 1, -1); dist[s] = 0;
+queue<int> q; q.push(s);
+while (!q.empty()) {
+    int v = q.front(); q.pop();
+    for (int w : g[v]) if (dist[w] == -1) { dist[w] = dist[v] + 1; q.push(w); }
+}`],
+   ['DSU',String.raw`parent = list(range(n + 1))
+def find(x):
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]; x = parent[x]
+    return x
+def union(a, b): parent[find(a)] = find(b)`,String.raw`vector<int> parent(n + 1);
+iota(parent.begin(), parent.end(), 0);
+function<int(int)> find = [&](int x) { return parent[x] == x ? x : parent[x] = find(parent[x]); };`]];
+  return `<h1>Cheat sheet</h1><p class="lead">Read this the night before the olympiad.</p>
+  <div class="grid"><div class="card"><h3>Limits → method</h3><table class="t"><tr><th>n up to</th><th>Method</th></tr><tr><td>10</td><td>all orders</td></tr><tr><td>20</td><td>all subsets (bitmask)</td></tr><tr><td>500</td><td>O(n³)</td></tr><tr><td>3000</td><td>O(n²)</td></tr><tr><td>2·10⁵–10⁶</td><td>sort, prefix, two pointers, binary search, DSU, BFS</td></tr><tr><td>10¹⁸</td><td>formula, binary search on the answer</td></tr></table></div>
+  <div class="card"><h3>Contest checklist</h3><ol><li>Change your contest password. Check Python/C++ and the editor work.</li><li>Read all problems (15 min). Write subtasks and points on paper.</li><li>Brute force and special cases first, on every problem.</li><li>Test the examples + n = 1 + all-equal before every submit.</li><li>Stuck 40 min: switch. Ask the jury early and simply.</li><li>Stay until the end. Last 20 min: no new ideas.</li></ol></div>
+  <div class="card"><h3>Signals → topic</h3><ul><li>"segment add/subtract" → <a href="#l-i5">difference / rises</a></li><li>"max of min", "min of max", answer up to 10⁹ → <a href="#l-m3">binary search on the answer</a></li><li>"same/different" constraints → <a href="#l-a1">DSU with parity</a></li><li>"k-th number such that" → <a href="#l-i7">counting + binary search</a></li><li>time up to 10⁹, few events → <a href="#l-a4">sweep</a></li><li>"both play optimally" → <a href="#l-r2">brute force small, find the pattern</a></li><li>"split into k contiguous parts" → <a href="#l-p3">DP</a></li></ul></div></div>
+  <h2 style="margin-top:26px">Templates</h2>${tpl.map(t => codeBox(t[0], t[1], t[2])).join('')}`;
+}
+function notFound(){ return `<h1>Page not found</h1><p><a href="#home">Go home</a></p>`; }
+
+/* ── router ── */
+function route(){
+  const h = (location.hash || '#home').slice(1);
+  CODES = []; clearInterval(mockTimer);
+  let html, nav = h.split('-')[0];
+  if(h==='home') html = home();
+  else if(h==='roadmap') html = roadmap();
+  else if(h==='learn') html = learn();
+  else if(h.startsWith('learn-')) { html = learn(h.slice(6)); nav = 'learn'; }
+  else if(h.startsWith('l-')) { html = lesson(h.slice(2)); nav = 'learn'; }
+  else if(h==='practice') html = practice();
+  else if(h.startsWith('p-')) { html = probPage(h.slice(2)); nav = 'practice'; }
+  else if(h==='olympiad') html = olympiad();
+  else if(h.startsWith('o-')) { html = olyPage(h.slice(2)); nav = 'olympiad'; }
+  else if(h==='mock') html = mock();
+  else if(h==='cheat') html = cheat();
+  else html = notFound();
+  app.innerHTML = html;
+  document.querySelectorAll('a.nav').forEach(a => a.classList.toggle('on', a.dataset.r===nav));
+  if(h==='practice') drawPractice();
+  if(h==='mock' && store.get('cp_mock', null)) { tick(); mockTimer = setInterval(tick, 1000); }
+  window.scrollTo(0, 0);
+}
+app.addEventListener('change', e => {
+  const t = e.target;
+  if(t.dataset.solve){ t.checked ? doneP.add(t.dataset.solve) : doneP.delete(t.dataset.solve); save();
+    const card = t.closest('.prob'); if(card) card.classList.toggle('done', t.checked); }
+  if(t.dataset.day){ t.checked ? doneD.add(t.dataset.day) : doneD.delete(t.dataset.day); save(); t.closest('.daycard').classList.toggle('done', t.checked); }
+  if(['fL','fT','fS','fD'].includes(t.id)){ PF = {lvl:$('#fL').value, topic:$('#fT').value, src:$('#fS').value, status:$('#fD').value, q:$('#fQ').value}; store.set('cp_pf', PF); drawPractice(); }
+});
+app.addEventListener('input', e => { if(e.target.id==='fQ'){ PF.q = e.target.value; store.set('cp_pf', PF); drawPractice(); } });
+app.addEventListener('click', e => {
+  const t = e.target.closest('button'); if(!t) return;
+  if(t.id==='markL'){ const id = location.hash.slice(3); doneL.has(id) ? doneL.delete(id) : doneL.add(id); save(); route(); }
+  if(t.dataset.mock){ store.set('cp_mock', {set:t.dataset.mock, start:Date.now()}); route(); }
+  if(t.id==='mockEnd'){ store.set('cp_mock', null); route(); }
+});
+window.addEventListener('hashchange', route);
+route();
+}
+</script>
+</body>
+</html>
